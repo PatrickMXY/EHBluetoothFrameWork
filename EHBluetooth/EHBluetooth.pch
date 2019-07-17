@@ -1,0 +1,24 @@
+//
+//  BLEColumnarLock.pch
+//  BLEColumnarLock
+//
+//  Created by 梦醒 on 2018/5/17.
+//  Copyright © 2018年 Patrick. All rights reserved.
+//
+
+#ifndef BLEColumnarLock_pch
+#define BLEColumnarLock_pch
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "EHBluetoothMacro.h"
+#import "Encrept.h"
+#import "NSData+Oxygen.h"
+#import "NSString+Oxygen.h"
+#import "BLEInterfaceType.h"
+#import "BLEEventHandlerType.h"
+#import "NSDictionary+Oxygen.h"
+#import "BLEDeviceEvent.h"
+
+
+
+
+#endif /* BLEColumnarLock_pch */

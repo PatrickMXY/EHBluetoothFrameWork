@@ -1,0 +1,35 @@
+//
+//  BLEKey.m
+//  BLEColumnarLock
+//
+//  Created by 梦醒 on 2018/5/17.
+//  Copyright © 2018年 Patrick. All rights reserved.
+//
+
+#import "BLEDevice.h"
+
+
+@interface BLEDevice ()
+
+@end
+@implementation BLEDevice
+/**
+ 初始化钥匙对象
+ 
+ @param broadCast 设备的广播数据
+ @return 钥匙对象
+ */
+- (instancetype)initWithPerphral:(CBPeripheral *)peripheral broadCast:(NSData *)broadCast
+{
+    return self;
+}
+- (void)connect:(NSInteger)timeout result:(BLEDeviceConnect)result{}
+
+- (void)disconnectBluetooth{}
+
+
+
+
+
+
+@end

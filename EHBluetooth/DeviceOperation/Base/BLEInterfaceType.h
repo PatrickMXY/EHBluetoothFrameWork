@@ -1,0 +1,50 @@
+//
+//  BLEInterfaceType.h
+//  BLEColumnarLock
+//
+//  Created by 梦醒 on 2018/7/18.
+//  Copyright © 2018年 Patrick. All rights reserved.
+//
+
+typedef NS_ENUM(NSInteger,EH_BLEInterfaceTypeColumnar){
+    EH_BLEInterfaceTypeInitKey              = 0x11,
+    EH_BLEInterfaceTypeInitLock             = 0x12,
+    EH_BLEInterfaceTypeSendPreFactor        = 0x13,
+    EH_BLEInterfaceUpdateEmergencyKey       = 0x14,
+    EH_BLEInterfaceTypeChangeOfflineMode    = 0x15,
+    EH_BLEInterfaceTypeGainKeyRandom        = 0x16,
+    EH_BLEInterfaceTypeResetTime            = 0x17,
+    EH_BLEInterfaceTypeLockIn               = 0x18,
+    EH_BLEInterfaceTypeLockAngleRecord      = 0x19,
+    EH_BLEInterfaceTypeSetCommkeyLifecycle  = 0x1A,
+    EH_BLEInterfaceTypeStartUpgrade         = 0x1D,
+    EH_BLEInterfaceTypeSendUpgradeInfo      = 0x1E,
+    EH_BLEInterfaceTypeGainLockInfo         = 0x31,
+    EH_BLEInterfaceTypeStartUnlock          = 0x32,
+    EH_BLEInterfaceTypeSendOTC              = 0x33,
+    EH_BLEInterfaceTypeSendPreOTC           = 0x34,
+    EH_BLEInterfaceTypeSetParam             = 0x35,
+    EH_BLEInterfaceTypeSendOfflineCode      = 0x36,
+    EH_BLEInterfaceTypeClearOfflineCode     = 0x37,
+    EH_BLEInterfaceTypeQueryOfflineCode     = 0x38,
+    EH_BLEInterfaceTypeGainEkeyAndLock      = 0x39,
+    EH_BLEInterfaceTypeRequestGetLog        = 0x3A,
+    EH_BLEInterfaceTypeVerifyEwmergencyCode = 0x3B,
+    EH_BLEInterfaceTypeGetVerison           = 0x3C,
+//设备主动发起
+    EH_BLEInterfaceTypeLog                  = 0x51,
+    EH_BLEInterfaceTypeApplyOTC             = 0x52,
+    EH_BLEInterfaceTypeLockStateChange      = 0x53,
+};
+typedef NS_ENUM(NSInteger,EH_BLEInterfaceTypeW266){
+    EH_BLEInterfaceTypeSetLockID                 =0x60,
+    EH_BLEInterfaceTypeExchangeCommKey           =0x61,
+    EH_BLEInterfaceTypeUpdateCommKey             =0x62,
+    EH_BLEInterfaceTypeUpdateOTCKey              =0x63,
+    EH_BLEInterfaceTypeUndataParam               =0x64,
+    EH_BLEInterfaceTypeUnlockLock                =0x65,
+    EH_BLEInterfaceTypeSendLockOTC               =0x66,
+    EH_BLEInterfaceTypeSetLockTime               =0x67,
+    EH_BLEInterfaceTypeApplyLockOTC              =0x70,
+    EH_BLEInterfaceTypeSendCloseCode             =0x71,
+};

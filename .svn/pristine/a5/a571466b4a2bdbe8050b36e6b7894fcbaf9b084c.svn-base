@@ -1,0 +1,1095 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CD02F1F120F5D3BD0054D94F /* BLEW266.h in Headers */ = {isa = PBXBuildFile; fileRef = CD02F1EF20F5D3BD0054D94F /* BLEW266.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD02F1F220F5D3BD0054D94F /* BLEW266.m in Sources */ = {isa = PBXBuildFile; fileRef = CD02F1F020F5D3BD0054D94F /* BLEW266.m */; };
+		CD07738A20AEA3F80014433B /* EHBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07738020AEA3F70014433B /* EHBluetooth.framework */; };
+		CD07738F20AEA3F80014433B /* EHBluetoothTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CD07738E20AEA3F80014433B /* EHBluetoothTests.m */; };
+		CD07739120AEA3F80014433B /* EHBluetooth.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07738320AEA3F80014433B /* EHBluetooth.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD0773F120AEA4D70014433B /* EHBluetooth.pch in Headers */ = {isa = PBXBuildFile; fileRef = CD07739D20AEA4D70014433B /* EHBluetooth.pch */; };
+		CD0773F220AEA4D70014433B /* NSData+Oxygen.m in Sources */ = {isa = PBXBuildFile; fileRef = CD07739F20AEA4D70014433B /* NSData+Oxygen.m */; };
+		CD0773F420AEA4D70014433B /* BLEKeyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773A220AEA4D70014433B /* BLEKeyProtocol.h */; };
+		CD0773F820AEA4D70014433B /* BLEKeyProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0773A620AEA4D70014433B /* BLEKeyProtocol.m */; };
+		CD0773FE20AEA4D70014433B /* NSString+Oxygen.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773AC20AEA4D70014433B /* NSString+Oxygen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD0773FF20AEA4D70014433B /* NSData+Oxygen.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773AD20AEA4D70014433B /* NSData+Oxygen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD07740020AEA4D70014433B /* NSString+Oxygen.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0773AE20AEA4D70014433B /* NSString+Oxygen.m */; };
+		CD07741720AEA4D70014433B /* Encrept.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773C720AEA4D70014433B /* Encrept.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD07741B20AEA4D70014433B /* GTMBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773CB20AEA4D70014433B /* GTMBase64.h */; };
+		CD07742B20AEA4D70014433B /* Encrept.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0773DC20AEA4D70014433B /* Encrept.m */; };
+		CD07743020AEA4D70014433B /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773E120AEA4D70014433B /* GTMDefines.h */; };
+		CD07743120AEA4D70014433B /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0773E220AEA4D70014433B /* GTMBase64.m */; };
+		CD07743620AEA4D70014433B /* EHBluetoothMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773E720AEA4D70014433B /* EHBluetoothMacro.h */; };
+		CD07743820AEA4D70014433B /* BLELock.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773EA20AEA4D70014433B /* BLELock.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD07743920AEA4D70014433B /* BLEDeviceMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773EB20AEA4D70014433B /* BLEDeviceMgr.h */; };
+		CD07743A20AEA4D70014433B /* BLEDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0773EC20AEA4D70014433B /* BLEDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD07743C20AEA4D70014433B /* BLELock.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0773EE20AEA4D70014433B /* BLELock.m */; };
+		CD07743D20AEA4D70014433B /* BLEDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0773EF20AEA4D70014433B /* BLEDevice.m */; };
+		CD07743E20AEA4D70014433B /* BLEDeviceMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0773F020AEA4D70014433B /* BLEDeviceMgr.m */; };
+		CD30034E219BFBB30020DD28 /* BLEDeviceEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = CD30034C219BFBB20020DD28 /* BLEDeviceEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD30034F219BFBB30020DD28 /* BLEDeviceEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CD30034D219BFBB30020DD28 /* BLEDeviceEvent.m */; };
+		CD4AE22A222F691800961481 /* BLEKeyParam.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4AE228222F691800961481 /* BLEKeyParam.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD4AE22B222F691800961481 /* BLEKeyParam.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4AE229222F691800961481 /* BLEKeyParam.m */; };
+		CD748F12210EA14300795FFA /* BLEKeyMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD748F10210EA14300795FFA /* BLEKeyMgr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD748F13210EA14300795FFA /* BLEKeyMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = CD748F11210EA14300795FFA /* BLEKeyMgr.m */; };
+		CD748F1D210EC23400795FFA /* BLEW266Mgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD748F1B210EC23400795FFA /* BLEW266Mgr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD748F1E210EC23400795FFA /* BLEW266Mgr.m in Sources */ = {isa = PBXBuildFile; fileRef = CD748F1C210EC23400795FFA /* BLEW266Mgr.m */; };
+		CD748F29211043FD00795FFA /* BLEW266Protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = CD748F27211043FD00795FFA /* BLEW266Protocol.h */; };
+		CD748F2A211043FD00795FFA /* BLEW266Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = CD748F28211043FD00795FFA /* BLEW266Protocol.m */; };
+		CD748F2C2110480B00795FFA /* BLEEventHandlerType.h in Headers */ = {isa = PBXBuildFile; fileRef = CD748F2B2110480B00795FFA /* BLEEventHandlerType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD76DCFA20D25CE400B86DF5 /* BLEKey.h in Headers */ = {isa = PBXBuildFile; fileRef = CD76DCF820D25CE400B86DF5 /* BLEKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD76DCFB20D25CE400B86DF5 /* BLEKey.m in Sources */ = {isa = PBXBuildFile; fileRef = CD76DCF920D25CE400B86DF5 /* BLEKey.m */; };
+		CD930E6020FEEBF000EBF9C8 /* BLEDeviceError.h in Headers */ = {isa = PBXBuildFile; fileRef = CD930E5E20FEEBF000EBF9C8 /* BLEDeviceError.h */; };
+		CD930E6120FEEBF000EBF9C8 /* BLEDeviceError.m in Sources */ = {isa = PBXBuildFile; fileRef = CD930E5F20FEEBF000EBF9C8 /* BLEDeviceError.m */; };
+		CD930E6520FF0D7D00EBF9C8 /* BLEInterfaceType.h in Headers */ = {isa = PBXBuildFile; fileRef = CD930E6420FF0D7D00EBF9C8 /* BLEInterfaceType.h */; };
+		CD966A4E20D0F28D0076E533 /* BLEBroadcast.h in Headers */ = {isa = PBXBuildFile; fileRef = CD966A4020D0F28D0076E533 /* BLEBroadcast.h */; };
+		CD966A4F20D0F28D0076E533 /* BleDevEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = CD966A4120D0F28D0076E533 /* BleDevEvent.h */; };
+		CD966A5020D0F28D0076E533 /* BLEDeviceType.m in Sources */ = {isa = PBXBuildFile; fileRef = CD966A4220D0F28D0076E533 /* BLEDeviceType.m */; };
+		CD966A5120D0F28D0076E533 /* BleClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CD966A4320D0F28D0076E533 /* BleClient.m */; };
+		CD966A5220D0F28D0076E533 /* BleMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD966A4420D0F28D0076E533 /* BleMgr.h */; };
+		CD966A5420D0F28D0076E533 /* BleEventProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = CD966A4620D0F28D0076E533 /* BleEventProtocol.h */; };
+		CD966A5520D0F28D0076E533 /* BleDevEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CD966A4720D0F28D0076E533 /* BleDevEvent.m */; };
+		CD966A5620D0F28D0076E533 /* BLEBroadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = CD966A4820D0F28D0076E533 /* BLEBroadcast.m */; };
+		CD966A5820D0F28D0076E533 /* BLEDeviceType.h in Headers */ = {isa = PBXBuildFile; fileRef = CD966A4A20D0F28D0076E533 /* BLEDeviceType.h */; };
+		CD966A5A20D0F28D0076E533 /* BleMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = CD966A4C20D0F28D0076E533 /* BleMgr.m */; };
+		CD966A5B20D0F28D0076E533 /* BleClient.h in Headers */ = {isa = PBXBuildFile; fileRef = CD966A4D20D0F28D0076E533 /* BleClient.h */; };
+		CDA41C6220B6520100CF6908 /* BLEDeviceCmdPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA41C6020B6520100CF6908 /* BLEDeviceCmdPackage.h */; };
+		CDA41C6320B6520100CF6908 /* BLEDeviceCmdPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA41C6120B6520100CF6908 /* BLEDeviceCmdPackage.m */; };
+		CDAE6DDB210B15BA00263C98 /* BleLockEventInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAE6DD9210B15BA00263C98 /* BleLockEventInfo.h */; };
+		CDAE6DDC210B15BA00263C98 /* BleLockEventInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAE6DDA210B15BA00263C98 /* BleLockEventInfo.m */; };
+		CDC66CDC225340360053D9D3 /* BleUpgradeMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC66CDA225340360053D9D3 /* BleUpgradeMgr.h */; };
+		CDC66CDD225340360053D9D3 /* BleUpgradeMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = CDC66CDB225340360053D9D3 /* BleUpgradeMgr.m */; };
+		CDE3B22A211AEA8900F0A456 /* NSDictionary+Oxygen.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE3B228211AEA8900F0A456 /* NSDictionary+Oxygen.h */; };
+		CDE3B22B211AEA8900F0A456 /* NSDictionary+Oxygen.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE3B229211AEA8900F0A456 /* NSDictionary+Oxygen.m */; };
+		CDFE2EE421EC3FA8006BB709 /* BLEKeyStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = CDFE2EE321EC3FA8006BB709 /* BLEKeyStruct.h */; };
+		CDFE2EE721EC8C89006BB709 /* BLEKeyLockLog.h in Headers */ = {isa = PBXBuildFile; fileRef = CDFE2EE521EC8C89006BB709 /* BLEKeyLockLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CDFE2EE821EC8C89006BB709 /* BLEKeyLockLog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFE2EE621EC8C89006BB709 /* BLEKeyLockLog.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CD02F19320F5B34C0054D94F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD07737720AEA3F70014433B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD02F17A20F5B34A0054D94F;
+			remoteInfo = BLE0203;
+		};
+		CD02F19E20F5B34C0054D94F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD07737720AEA3F70014433B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD02F17A20F5B34A0054D94F;
+			remoteInfo = BLE0203;
+		};
+		CD07738B20AEA3F80014433B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD07737720AEA3F70014433B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07737F20AEA3F70014433B;
+			remoteInfo = EHBluetooth;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AB5A016052E1ED185B411C2E /* libPods-EHBluetooth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EHBluetooth.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD02F17B20F5B34A0054D94F /* BLE0203.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLE0203.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD02F19220F5B34C0054D94F /* BLE0203Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BLE0203Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD02F19D20F5B34C0054D94F /* BLE0203UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BLE0203UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD02F1EF20F5D3BD0054D94F /* BLEW266.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEW266.h; sourceTree = "<group>"; };
+		CD02F1F020F5D3BD0054D94F /* BLEW266.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEW266.m; sourceTree = "<group>"; };
+		CD07738020AEA3F70014433B /* EHBluetooth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EHBluetooth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD07738320AEA3F80014433B /* EHBluetooth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EHBluetooth.h; sourceTree = "<group>"; };
+		CD07738420AEA3F80014433B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD07738920AEA3F80014433B /* EHBluetoothTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EHBluetoothTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD07738E20AEA3F80014433B /* EHBluetoothTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EHBluetoothTests.m; sourceTree = "<group>"; };
+		CD07739020AEA3F80014433B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD07739D20AEA4D70014433B /* EHBluetooth.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EHBluetooth.pch; sourceTree = "<group>"; };
+		CD07739F20AEA4D70014433B /* NSData+Oxygen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Oxygen.m"; sourceTree = "<group>"; };
+		CD0773A220AEA4D70014433B /* BLEKeyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEKeyProtocol.h; sourceTree = "<group>"; };
+		CD0773A620AEA4D70014433B /* BLEKeyProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEKeyProtocol.m; sourceTree = "<group>"; };
+		CD0773AC20AEA4D70014433B /* NSString+Oxygen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Oxygen.h"; sourceTree = "<group>"; };
+		CD0773AD20AEA4D70014433B /* NSData+Oxygen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Oxygen.h"; sourceTree = "<group>"; };
+		CD0773AE20AEA4D70014433B /* NSString+Oxygen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Oxygen.m"; sourceTree = "<group>"; };
+		CD0773C720AEA4D70014433B /* Encrept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encrept.h; sourceTree = "<group>"; };
+		CD0773CB20AEA4D70014433B /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		CD0773DC20AEA4D70014433B /* Encrept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encrept.m; sourceTree = "<group>"; };
+		CD0773E120AEA4D70014433B /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		CD0773E220AEA4D70014433B /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		CD0773E720AEA4D70014433B /* EHBluetoothMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EHBluetoothMacro.h; sourceTree = "<group>"; };
+		CD0773EA20AEA4D70014433B /* BLELock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLELock.h; sourceTree = "<group>"; };
+		CD0773EB20AEA4D70014433B /* BLEDeviceMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDeviceMgr.h; sourceTree = "<group>"; };
+		CD0773EC20AEA4D70014433B /* BLEDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDevice.h; sourceTree = "<group>"; };
+		CD0773EE20AEA4D70014433B /* BLELock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLELock.m; sourceTree = "<group>"; };
+		CD0773EF20AEA4D70014433B /* BLEDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEDevice.m; sourceTree = "<group>"; };
+		CD0773F020AEA4D70014433B /* BLEDeviceMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEDeviceMgr.m; sourceTree = "<group>"; };
+		CD30034C219BFBB20020DD28 /* BLEDeviceEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEDeviceEvent.h; sourceTree = "<group>"; };
+		CD30034D219BFBB30020DD28 /* BLEDeviceEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEDeviceEvent.m; sourceTree = "<group>"; };
+		CD4AE228222F691800961481 /* BLEKeyParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEKeyParam.h; sourceTree = "<group>"; };
+		CD4AE229222F691800961481 /* BLEKeyParam.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEKeyParam.m; sourceTree = "<group>"; };
+		CD748F10210EA14300795FFA /* BLEKeyMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEKeyMgr.h; sourceTree = "<group>"; };
+		CD748F11210EA14300795FFA /* BLEKeyMgr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEKeyMgr.m; sourceTree = "<group>"; };
+		CD748F1B210EC23400795FFA /* BLEW266Mgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEW266Mgr.h; sourceTree = "<group>"; };
+		CD748F1C210EC23400795FFA /* BLEW266Mgr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEW266Mgr.m; sourceTree = "<group>"; };
+		CD748F27211043FD00795FFA /* BLEW266Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEW266Protocol.h; sourceTree = "<group>"; };
+		CD748F28211043FD00795FFA /* BLEW266Protocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEW266Protocol.m; sourceTree = "<group>"; };
+		CD748F2B2110480B00795FFA /* BLEEventHandlerType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEEventHandlerType.h; sourceTree = "<group>"; };
+		CD76DCF820D25CE400B86DF5 /* BLEKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEKey.h; sourceTree = "<group>"; };
+		CD76DCF920D25CE400B86DF5 /* BLEKey.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEKey.m; sourceTree = "<group>"; };
+		CD8A771C2237B5E700910BC7 /* iOSDFULibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iOSDFULibrary.framework; sourceTree = "<group>"; };
+		CD8A771D2237B5E700910BC7 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Zip.framework; sourceTree = "<group>"; };
+		CD930E5E20FEEBF000EBF9C8 /* BLEDeviceError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEDeviceError.h; sourceTree = "<group>"; };
+		CD930E5F20FEEBF000EBF9C8 /* BLEDeviceError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEDeviceError.m; sourceTree = "<group>"; };
+		CD930E6420FF0D7D00EBF9C8 /* BLEInterfaceType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEInterfaceType.h; sourceTree = "<group>"; };
+		CD966A4020D0F28D0076E533 /* BLEBroadcast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEBroadcast.h; sourceTree = "<group>"; };
+		CD966A4120D0F28D0076E533 /* BleDevEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleDevEvent.h; sourceTree = "<group>"; };
+		CD966A4220D0F28D0076E533 /* BLEDeviceType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEDeviceType.m; sourceTree = "<group>"; };
+		CD966A4320D0F28D0076E533 /* BleClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleClient.m; sourceTree = "<group>"; };
+		CD966A4420D0F28D0076E533 /* BleMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleMgr.h; sourceTree = "<group>"; };
+		CD966A4620D0F28D0076E533 /* BleEventProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleEventProtocol.h; sourceTree = "<group>"; };
+		CD966A4720D0F28D0076E533 /* BleDevEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleDevEvent.m; sourceTree = "<group>"; };
+		CD966A4820D0F28D0076E533 /* BLEBroadcast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEBroadcast.m; sourceTree = "<group>"; };
+		CD966A4A20D0F28D0076E533 /* BLEDeviceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDeviceType.h; sourceTree = "<group>"; };
+		CD966A4C20D0F28D0076E533 /* BleMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleMgr.m; sourceTree = "<group>"; };
+		CD966A4D20D0F28D0076E533 /* BleClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleClient.h; sourceTree = "<group>"; };
+		CDA41C6020B6520100CF6908 /* BLEDeviceCmdPackage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEDeviceCmdPackage.h; sourceTree = "<group>"; };
+		CDA41C6120B6520100CF6908 /* BLEDeviceCmdPackage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEDeviceCmdPackage.m; sourceTree = "<group>"; };
+		CDAE6DD9210B15BA00263C98 /* BleLockEventInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleLockEventInfo.h; sourceTree = "<group>"; };
+		CDAE6DDA210B15BA00263C98 /* BleLockEventInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BleLockEventInfo.m; sourceTree = "<group>"; };
+		CDC66CDA225340360053D9D3 /* BleUpgradeMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleUpgradeMgr.h; sourceTree = "<group>"; };
+		CDC66CDB225340360053D9D3 /* BleUpgradeMgr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BleUpgradeMgr.m; sourceTree = "<group>"; };
+		CDE3B228211AEA8900F0A456 /* NSDictionary+Oxygen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Oxygen.h"; sourceTree = "<group>"; };
+		CDE3B229211AEA8900F0A456 /* NSDictionary+Oxygen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Oxygen.m"; sourceTree = "<group>"; };
+		CDFE2EE321EC3FA8006BB709 /* BLEKeyStruct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEKeyStruct.h; sourceTree = "<group>"; };
+		CDFE2EE521EC8C89006BB709 /* BLEKeyLockLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEKeyLockLog.h; sourceTree = "<group>"; };
+		CDFE2EE621EC8C89006BB709 /* BLEKeyLockLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEKeyLockLog.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CD02F17820F5B34A0054D94F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD02F18F20F5B34C0054D94F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD02F19A20F5B34C0054D94F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD07737C20AEA3F70014433B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD07738620AEA3F80014433B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD07738A20AEA3F80014433B /* EHBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8398AF8BAB157B9E06A5370C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AFABB331AA85D9414127903E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CD8A771C2237B5E700910BC7 /* iOSDFULibrary.framework */,
+				CD8A771D2237B5E700910BC7 /* Zip.framework */,
+				AB5A016052E1ED185B411C2E /* libPods-EHBluetooth.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD02F1EE20F5D39E0054D94F /* BleW266 */ = {
+			isa = PBXGroup;
+			children = (
+				CD748F1B210EC23400795FFA /* BLEW266Mgr.h */,
+				CD748F1C210EC23400795FFA /* BLEW266Mgr.m */,
+				CD02F1EF20F5D3BD0054D94F /* BLEW266.h */,
+				CD02F1F020F5D3BD0054D94F /* BLEW266.m */,
+				CD748F27211043FD00795FFA /* BLEW266Protocol.h */,
+				CD748F28211043FD00795FFA /* BLEW266Protocol.m */,
+			);
+			path = BleW266;
+			sourceTree = "<group>";
+		};
+		CD07737620AEA3F70014433B = {
+			isa = PBXGroup;
+			children = (
+				CD07738220AEA3F70014433B /* EHBluetooth */,
+				CD07738D20AEA3F80014433B /* EHBluetoothTests */,
+				CD07738120AEA3F70014433B /* Products */,
+				8398AF8BAB157B9E06A5370C /* Pods */,
+				AFABB331AA85D9414127903E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		CD07738120AEA3F70014433B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CD07738020AEA3F70014433B /* EHBluetooth.framework */,
+				CD07738920AEA3F80014433B /* EHBluetoothTests.xctest */,
+				CD02F17B20F5B34A0054D94F /* BLE0203.app */,
+				CD02F19220F5B34C0054D94F /* BLE0203Tests.xctest */,
+				CD02F19D20F5B34C0054D94F /* BLE0203UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CD07738220AEA3F70014433B /* EHBluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				CD07738320AEA3F80014433B /* EHBluetooth.h */,
+				CD07739D20AEA4D70014433B /* EHBluetooth.pch */,
+				CD07739E20AEA4D70014433B /* Function */,
+				CD966A3F20D0F28D0076E533 /* BleOperation */,
+				CD0773E820AEA4D70014433B /* DeviceOperation */,
+				CD07738420AEA3F80014433B /* Info.plist */,
+			);
+			path = EHBluetooth;
+			sourceTree = "<group>";
+		};
+		CD07738D20AEA3F80014433B /* EHBluetoothTests */ = {
+			isa = PBXGroup;
+			children = (
+				CD07738E20AEA3F80014433B /* EHBluetoothTests.m */,
+				CD07739020AEA3F80014433B /* Info.plist */,
+			);
+			path = EHBluetoothTests;
+			sourceTree = "<group>";
+		};
+		CD07739E20AEA4D70014433B /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				CD0773E720AEA4D70014433B /* EHBluetoothMacro.h */,
+				CD0773AD20AEA4D70014433B /* NSData+Oxygen.h */,
+				CD07739F20AEA4D70014433B /* NSData+Oxygen.m */,
+				CD0773AC20AEA4D70014433B /* NSString+Oxygen.h */,
+				CD0773AE20AEA4D70014433B /* NSString+Oxygen.m */,
+				CDE3B228211AEA8900F0A456 /* NSDictionary+Oxygen.h */,
+				CDE3B229211AEA8900F0A456 /* NSDictionary+Oxygen.m */,
+				CD76DCF620D240ED00B86DF5 /* Tool */,
+			);
+			path = Function;
+			sourceTree = "<group>";
+		};
+		CD0773C520AEA4D70014433B /* Encrept */ = {
+			isa = PBXGroup;
+			children = (
+				CD0773C720AEA4D70014433B /* Encrept.h */,
+				CD0773DC20AEA4D70014433B /* Encrept.m */,
+				CD0773CB20AEA4D70014433B /* GTMBase64.h */,
+				CD0773E220AEA4D70014433B /* GTMBase64.m */,
+				CD0773E120AEA4D70014433B /* GTMDefines.h */,
+			);
+			path = Encrept;
+			sourceTree = "<group>";
+		};
+		CD0773E820AEA4D70014433B /* DeviceOperation */ = {
+			isa = PBXGroup;
+			children = (
+				CDDDEA9E20D36C6800474E86 /* Base */,
+				CD76DCF720D25CC800B86DF5 /* BleColumnar */,
+				CD02F1EE20F5D39E0054D94F /* BleW266 */,
+			);
+			path = DeviceOperation;
+			sourceTree = "<group>";
+		};
+		CD76DCF620D240ED00B86DF5 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				CD0773C520AEA4D70014433B /* Encrept */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		CD76DCF720D25CC800B86DF5 /* BleColumnar */ = {
+			isa = PBXGroup;
+			children = (
+				CDFE2EE321EC3FA8006BB709 /* BLEKeyStruct.h */,
+				CD748F10210EA14300795FFA /* BLEKeyMgr.h */,
+				CD748F11210EA14300795FFA /* BLEKeyMgr.m */,
+				CD76DCF820D25CE400B86DF5 /* BLEKey.h */,
+				CD76DCF920D25CE400B86DF5 /* BLEKey.m */,
+				CD0773EA20AEA4D70014433B /* BLELock.h */,
+				CD0773EE20AEA4D70014433B /* BLELock.m */,
+				CDAE6DD9210B15BA00263C98 /* BleLockEventInfo.h */,
+				CDAE6DDA210B15BA00263C98 /* BleLockEventInfo.m */,
+				CD0773A220AEA4D70014433B /* BLEKeyProtocol.h */,
+				CD0773A620AEA4D70014433B /* BLEKeyProtocol.m */,
+				CDFE2EE521EC8C89006BB709 /* BLEKeyLockLog.h */,
+				CDFE2EE621EC8C89006BB709 /* BLEKeyLockLog.m */,
+				CD4AE228222F691800961481 /* BLEKeyParam.h */,
+				CD4AE229222F691800961481 /* BLEKeyParam.m */,
+			);
+			path = BleColumnar;
+			sourceTree = "<group>";
+		};
+		CD966A3F20D0F28D0076E533 /* BleOperation */ = {
+			isa = PBXGroup;
+			children = (
+				CD966A4620D0F28D0076E533 /* BleEventProtocol.h */,
+				CD966A4420D0F28D0076E533 /* BleMgr.h */,
+				CD966A4C20D0F28D0076E533 /* BleMgr.m */,
+				CD966A4D20D0F28D0076E533 /* BleClient.h */,
+				CD966A4320D0F28D0076E533 /* BleClient.m */,
+				CD966A4120D0F28D0076E533 /* BleDevEvent.h */,
+				CD966A4720D0F28D0076E533 /* BleDevEvent.m */,
+				CDC66CDA225340360053D9D3 /* BleUpgradeMgr.h */,
+				CDC66CDB225340360053D9D3 /* BleUpgradeMgr.m */,
+			);
+			path = BleOperation;
+			sourceTree = "<group>";
+		};
+		CDDDEA9E20D36C6800474E86 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				CD966A4020D0F28D0076E533 /* BLEBroadcast.h */,
+				CD966A4820D0F28D0076E533 /* BLEBroadcast.m */,
+				CD0773EC20AEA4D70014433B /* BLEDevice.h */,
+				CD0773EF20AEA4D70014433B /* BLEDevice.m */,
+				CDA41C6020B6520100CF6908 /* BLEDeviceCmdPackage.h */,
+				CDA41C6120B6520100CF6908 /* BLEDeviceCmdPackage.m */,
+				CD930E5E20FEEBF000EBF9C8 /* BLEDeviceError.h */,
+				CD930E5F20FEEBF000EBF9C8 /* BLEDeviceError.m */,
+				CD30034C219BFBB20020DD28 /* BLEDeviceEvent.h */,
+				CD30034D219BFBB30020DD28 /* BLEDeviceEvent.m */,
+				CD0773EB20AEA4D70014433B /* BLEDeviceMgr.h */,
+				CD0773F020AEA4D70014433B /* BLEDeviceMgr.m */,
+				CD966A4A20D0F28D0076E533 /* BLEDeviceType.h */,
+				CD966A4220D0F28D0076E533 /* BLEDeviceType.m */,
+				CD748F2B2110480B00795FFA /* BLEEventHandlerType.h */,
+				CD930E6420FF0D7D00EBF9C8 /* BLEInterfaceType.h */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		CD07737D20AEA3F70014433B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4AE22A222F691800961481 /* BLEKeyParam.h in Headers */,
+				CDFE2EE421EC3FA8006BB709 /* BLEKeyStruct.h in Headers */,
+				CD07739120AEA3F80014433B /* EHBluetooth.h in Headers */,
+				CD07743A20AEA4D70014433B /* BLEDevice.h in Headers */,
+				CD30034E219BFBB30020DD28 /* BLEDeviceEvent.h in Headers */,
+				CD748F2C2110480B00795FFA /* BLEEventHandlerType.h in Headers */,
+				CD748F1D210EC23400795FFA /* BLEW266Mgr.h in Headers */,
+				CD02F1F120F5D3BD0054D94F /* BLEW266.h in Headers */,
+				CD748F12210EA14300795FFA /* BLEKeyMgr.h in Headers */,
+				CD76DCFA20D25CE400B86DF5 /* BLEKey.h in Headers */,
+				CD07743820AEA4D70014433B /* BLELock.h in Headers */,
+				CD0773FE20AEA4D70014433B /* NSString+Oxygen.h in Headers */,
+				CD0773FF20AEA4D70014433B /* NSData+Oxygen.h in Headers */,
+				CDFE2EE721EC8C89006BB709 /* BLEKeyLockLog.h in Headers */,
+				CD07741720AEA4D70014433B /* Encrept.h in Headers */,
+				CD966A4E20D0F28D0076E533 /* BLEBroadcast.h in Headers */,
+				CD07741B20AEA4D70014433B /* GTMBase64.h in Headers */,
+				CD930E6520FF0D7D00EBF9C8 /* BLEInterfaceType.h in Headers */,
+				CD966A5B20D0F28D0076E533 /* BleClient.h in Headers */,
+				CD966A5820D0F28D0076E533 /* BLEDeviceType.h in Headers */,
+				CD07743920AEA4D70014433B /* BLEDeviceMgr.h in Headers */,
+				CD966A4F20D0F28D0076E533 /* BleDevEvent.h in Headers */,
+				CD966A5420D0F28D0076E533 /* BleEventProtocol.h in Headers */,
+				CD966A5220D0F28D0076E533 /* BleMgr.h in Headers */,
+				CDAE6DDB210B15BA00263C98 /* BleLockEventInfo.h in Headers */,
+				CD930E6020FEEBF000EBF9C8 /* BLEDeviceError.h in Headers */,
+				CDE3B22A211AEA8900F0A456 /* NSDictionary+Oxygen.h in Headers */,
+				CD748F29211043FD00795FFA /* BLEW266Protocol.h in Headers */,
+				CD07743620AEA4D70014433B /* EHBluetoothMacro.h in Headers */,
+				CD0773F120AEA4D70014433B /* EHBluetooth.pch in Headers */,
+				CD0773F420AEA4D70014433B /* BLEKeyProtocol.h in Headers */,
+				CD07743020AEA4D70014433B /* GTMDefines.h in Headers */,
+				CDC66CDC225340360053D9D3 /* BleUpgradeMgr.h in Headers */,
+				CDA41C6220B6520100CF6908 /* BLEDeviceCmdPackage.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		CD02F17A20F5B34A0054D94F /* BLE0203 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD02F1AA20F5B34C0054D94F /* Build configuration list for PBXNativeTarget "BLE0203" */;
+			buildPhases = (
+				CD02F17720F5B34A0054D94F /* Sources */,
+				CD02F17820F5B34A0054D94F /* Frameworks */,
+				CD02F17920F5B34A0054D94F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BLE0203;
+			productName = BLE0203;
+			productReference = CD02F17B20F5B34A0054D94F /* BLE0203.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CD02F19120F5B34C0054D94F /* BLE0203Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD02F1AB20F5B34C0054D94F /* Build configuration list for PBXNativeTarget "BLE0203Tests" */;
+			buildPhases = (
+				CD02F18E20F5B34C0054D94F /* Sources */,
+				CD02F18F20F5B34C0054D94F /* Frameworks */,
+				CD02F19020F5B34C0054D94F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CD02F19420F5B34C0054D94F /* PBXTargetDependency */,
+			);
+			name = BLE0203Tests;
+			productName = BLE0203Tests;
+			productReference = CD02F19220F5B34C0054D94F /* BLE0203Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CD02F19C20F5B34C0054D94F /* BLE0203UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD02F1AC20F5B34C0054D94F /* Build configuration list for PBXNativeTarget "BLE0203UITests" */;
+			buildPhases = (
+				CD02F19920F5B34C0054D94F /* Sources */,
+				CD02F19A20F5B34C0054D94F /* Frameworks */,
+				CD02F19B20F5B34C0054D94F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CD02F19F20F5B34C0054D94F /* PBXTargetDependency */,
+			);
+			name = BLE0203UITests;
+			productName = BLE0203UITests;
+			productReference = CD02F19D20F5B34C0054D94F /* BLE0203UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CD07737F20AEA3F70014433B /* EHBluetooth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD07739420AEA3F80014433B /* Build configuration list for PBXNativeTarget "EHBluetooth" */;
+			buildPhases = (
+				CD07737B20AEA3F70014433B /* Sources */,
+				CD07737C20AEA3F70014433B /* Frameworks */,
+				CD07737D20AEA3F70014433B /* Headers */,
+				CD07737E20AEA3F70014433B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EHBluetooth;
+			productName = EHBluetooth;
+			productReference = CD07738020AEA3F70014433B /* EHBluetooth.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CD07738820AEA3F80014433B /* EHBluetoothTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD07739720AEA3F80014433B /* Build configuration list for PBXNativeTarget "EHBluetoothTests" */;
+			buildPhases = (
+				CD07738520AEA3F80014433B /* Sources */,
+				CD07738620AEA3F80014433B /* Frameworks */,
+				CD07738720AEA3F80014433B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CD07738C20AEA3F80014433B /* PBXTargetDependency */,
+			);
+			name = EHBluetoothTests;
+			productName = EHBluetoothTests;
+			productReference = CD07738920AEA3F80014433B /* EHBluetoothTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CD07737720AEA3F70014433B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = Patrick;
+				TargetAttributes = {
+					CD02F17A20F5B34A0054D94F = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					CD02F19120F5B34C0054D94F = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = CD02F17A20F5B34A0054D94F;
+					};
+					CD02F19C20F5B34C0054D94F = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = CD02F17A20F5B34A0054D94F;
+					};
+					CD07737F20AEA3F70014433B = {
+						CreatedOnToolsVersion = 9.3;
+					};
+					CD07738820AEA3F80014433B = {
+						CreatedOnToolsVersion = 9.3;
+					};
+				};
+			};
+			buildConfigurationList = CD07737A20AEA3F70014433B /* Build configuration list for PBXProject "EHBluetooth" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CD07737620AEA3F70014433B;
+			productRefGroup = CD07738120AEA3F70014433B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CD07737F20AEA3F70014433B /* EHBluetooth */,
+				CD07738820AEA3F80014433B /* EHBluetoothTests */,
+				CD02F17A20F5B34A0054D94F /* BLE0203 */,
+				CD02F19120F5B34C0054D94F /* BLE0203Tests */,
+				CD02F19C20F5B34C0054D94F /* BLE0203UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CD02F17920F5B34A0054D94F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD02F19020F5B34C0054D94F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD02F19B20F5B34C0054D94F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD07737E20AEA3F70014433B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD07738720AEA3F80014433B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CD02F17720F5B34A0054D94F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD02F18E20F5B34C0054D94F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD02F19920F5B34C0054D94F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD07737B20AEA3F70014433B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4AE22B222F691800961481 /* BLEKeyParam.m in Sources */,
+				CD30034F219BFBB30020DD28 /* BLEDeviceEvent.m in Sources */,
+				CDFE2EE821EC8C89006BB709 /* BLEKeyLockLog.m in Sources */,
+				CD930E6120FEEBF000EBF9C8 /* BLEDeviceError.m in Sources */,
+				CDA41C6320B6520100CF6908 /* BLEDeviceCmdPackage.m in Sources */,
+				CD966A5A20D0F28D0076E533 /* BleMgr.m in Sources */,
+				CD0773F820AEA4D70014433B /* BLEKeyProtocol.m in Sources */,
+				CD966A5620D0F28D0076E533 /* BLEBroadcast.m in Sources */,
+				CD02F1F220F5D3BD0054D94F /* BLEW266.m in Sources */,
+				CD07743C20AEA4D70014433B /* BLELock.m in Sources */,
+				CD748F1E210EC23400795FFA /* BLEW266Mgr.m in Sources */,
+				CD76DCFB20D25CE400B86DF5 /* BLEKey.m in Sources */,
+				CDAE6DDC210B15BA00263C98 /* BleLockEventInfo.m in Sources */,
+				CD07742B20AEA4D70014433B /* Encrept.m in Sources */,
+				CD966A5020D0F28D0076E533 /* BLEDeviceType.m in Sources */,
+				CD748F13210EA14300795FFA /* BLEKeyMgr.m in Sources */,
+				CD748F2A211043FD00795FFA /* BLEW266Protocol.m in Sources */,
+				CD07743120AEA4D70014433B /* GTMBase64.m in Sources */,
+				CD0773F220AEA4D70014433B /* NSData+Oxygen.m in Sources */,
+				CD966A5120D0F28D0076E533 /* BleClient.m in Sources */,
+				CD07743D20AEA4D70014433B /* BLEDevice.m in Sources */,
+				CDE3B22B211AEA8900F0A456 /* NSDictionary+Oxygen.m in Sources */,
+				CD07743E20AEA4D70014433B /* BLEDeviceMgr.m in Sources */,
+				CD07740020AEA4D70014433B /* NSString+Oxygen.m in Sources */,
+				CD966A5520D0F28D0076E533 /* BleDevEvent.m in Sources */,
+				CDC66CDD225340360053D9D3 /* BleUpgradeMgr.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD07738520AEA3F80014433B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD07738F20AEA3F80014433B /* EHBluetoothTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CD02F19420F5B34C0054D94F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD02F17A20F5B34A0054D94F /* BLE0203 */;
+			targetProxy = CD02F19320F5B34C0054D94F /* PBXContainerItemProxy */;
+		};
+		CD02F19F20F5B34C0054D94F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD02F17A20F5B34A0054D94F /* BLE0203 */;
+			targetProxy = CD02F19E20F5B34C0054D94F /* PBXContainerItemProxy */;
+		};
+		CD07738C20AEA3F80014433B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD07737F20AEA3F70014433B /* EHBluetooth */;
+			targetProxy = CD07738B20AEA3F80014433B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CD02F1A420F5B34C0054D94F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YMYL85A56A;
+				INFOPLIST_FILE = BLE0203/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.BLE0203;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CD02F1A520F5B34C0054D94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YMYL85A56A;
+				INFOPLIST_FILE = BLE0203/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.BLE0203;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CD02F1A620F5B34C0054D94F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YMYL85A56A;
+				INFOPLIST_FILE = BLE0203Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.BLE0203Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BLE0203.app/BLE0203";
+			};
+			name = Debug;
+		};
+		CD02F1A720F5B34C0054D94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YMYL85A56A;
+				INFOPLIST_FILE = BLE0203Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.BLE0203Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BLE0203.app/BLE0203";
+			};
+			name = Release;
+		};
+		CD02F1A820F5B34C0054D94F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YMYL85A56A;
+				INFOPLIST_FILE = BLE0203UITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.BLE0203UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BLE0203;
+			};
+			name = Debug;
+		};
+		CD02F1A920F5B34C0054D94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YMYL85A56A;
+				INFOPLIST_FILE = BLE0203UITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.BLE0203UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BLE0203;
+			};
+			name = Release;
+		};
+		CD07739220AEA3F80014433B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		CD07739320AEA3F80014433B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CD07739520AEA3F80014433B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/EHBluetooth/EHBluetooth.pch";
+				INFOPLIST_FILE = EHBluetooth/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ymx.BLEDemo;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CD07739620AEA3F80014433B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/EHBluetooth/EHBluetooth.pch";
+				INFOPLIST_FILE = EHBluetooth/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ymx.BLEDemo;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CD07739820AEA3F80014433B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PGN322WP3B;
+				INFOPLIST_FILE = EHBluetoothTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.EHBluetoothTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CD07739920AEA3F80014433B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PGN322WP3B;
+				INFOPLIST_FILE = EHBluetoothTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.EastHouse.EHBluetoothTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CD02F1AA20F5B34C0054D94F /* Build configuration list for PBXNativeTarget "BLE0203" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD02F1A420F5B34C0054D94F /* Debug */,
+				CD02F1A520F5B34C0054D94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD02F1AB20F5B34C0054D94F /* Build configuration list for PBXNativeTarget "BLE0203Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD02F1A620F5B34C0054D94F /* Debug */,
+				CD02F1A720F5B34C0054D94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD02F1AC20F5B34C0054D94F /* Build configuration list for PBXNativeTarget "BLE0203UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD02F1A820F5B34C0054D94F /* Debug */,
+				CD02F1A920F5B34C0054D94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD07737A20AEA3F70014433B /* Build configuration list for PBXProject "EHBluetooth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD07739220AEA3F80014433B /* Debug */,
+				CD07739320AEA3F80014433B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD07739420AEA3F80014433B /* Build configuration list for PBXNativeTarget "EHBluetooth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD07739520AEA3F80014433B /* Debug */,
+				CD07739620AEA3F80014433B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD07739720AEA3F80014433B /* Build configuration list for PBXNativeTarget "EHBluetoothTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD07739820AEA3F80014433B /* Debug */,
+				CD07739920AEA3F80014433B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CD07737720AEA3F70014433B /* Project object */;
+}

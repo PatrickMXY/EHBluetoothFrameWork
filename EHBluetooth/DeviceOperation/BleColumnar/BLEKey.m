@@ -1,0 +1,856 @@
+//
+//  BLEKeyV1.m
+//  BLEColumnarLock
+//
+//  Created by 梦醒 on 2018/6/14.
+//  Copyright © 2018年 Patrick. All rights reserved.
+//
+
+#import "BLEKey.h"
+#import "BLEBroadcast.h"
+#import "BLEKeyProtocol.h"
+#import "BLEDeviceError.h"
+#import "BLEInterfaceType.h"
+#import "BleClient.h"
+#import "BLEDeviceCmdPackage.h"
+#import "BLEKeyStruct.h"
+#import "BLEKeyLockLog.h"
+#import "BleUpgradeMgr.h"
+
+#define BLE_COMMNUTATION_TIMEOUT 6
+
+
+typedef NS_ENUM(NSInteger,BLEKeyClientTag){
+    BLEKeyClientEKeyInit = 0x00,
+    BLEKeyClientRecoveryEKey,
+    BLEKeyClientLockInit,
+    BLEKeyClientRecoveryLock,
+    BLEKeyClientLockInfo,
+    BLEKeyClientStartUnlock,
+    BLEKeyClientSetTime,
+    BLEKeyClientSendOTC,
+    BLEKeyClientSendPreOTC,
+    BLEKeyClientSenPreFactor,
+    
+};
+
+@interface BLEKey ()<BleEventProtocol>
+
+@property (nonatomic, assign) BOOL preUnlock;
+
+@property (nonatomic, strong) BLELock *linkLock;
+
+@property (nonatomic, strong) BLEKeyProtocol *bleProtocol;  //蓝牙通讯
+
+@property (nonatomic, strong) NSData *temporaryCommKey;   //临时通讯秘钥
+//设备随机数，广播获取的
+@property (nonatomic, strong) NSString *DevRandom;
+
+@property (nonatomic, assign) BOOL isInitKey;
+
+@property (nonatomic, assign) BOOL isInitLock;
+//回传事件模型
+@property (nonatomic, strong) BLEDeviceEvent *event;
+//定时器连接超时
+@property (nonatomic, strong) dispatch_source_t timer;
+//连接超时时限
+@property (nonatomic, assign) NSInteger countDown;
+//收到的数据长度
+@property (assign, nonatomic) NSInteger dataLenth;
+//收到的数据
+@property (strong, nonatomic) NSMutableData *receivedData;
+
+@property (nonatomic, strong) BleClient *bleClient; //蓝牙设备操作
+
+@property (nonatomic, copy) BLELinkLockBlock lockBlock;
+
+@property (nonatomic, copy) BLEDeviceConnect connectBlock;
+
+@property (nonatomic , strong) NSString *upgradeKey;
+
+@property (nonatomic , assign) NSInteger     upgradeIndex;
+@property (nonatomic , strong) BleUpgradeMgr *upgradeMgr;
+@end
+@implementation BLEKey
+- (instancetype)initWithPerphral:(CBPeripheral *)peripheral broadCast:(NSData *)broadCast
+{
+    if (self = [super init]) {
+        self.peripheral = peripheral;
+        self.KeyName = self.peripheral.name;
+        self.MacAddress = @"";
+        self.Connected = NO;
+        self.InitStatus = @"";
+        self.FirwareVer = @"";
+        if (broadCast) {
+            BLEBroadcast *bleCast = [[BLEBroadcast alloc]initWithBroadcastData:broadCast];
+            self.InitStatus = [NSString stringWithFormat:@"%u", bleCast.bleInitStatus];
+            self.DevRandom = [NSString stringWithFormat:@"%u", (unsigned int)bleCast.devRandom];
+            self.EKeyID = [NSString stringWithFormat:@"%u", (unsigned int)bleCast.keyId];
+            CGFloat voltage = bleCast.Voltage;
+            voltage = voltage/20;
+            
+            //3.4 - 4.1v
+            self.Voltage = [NSString stringWithFormat:@"%.2f",voltage];
+        }
+    }
+    return self;
+}
+- (void)connect:(NSInteger)timeout result:(BLEDeviceConnect)result
+{
+    self.Connecting = YES;
+    [self.bleClient bleClient_connect];
+    _connectBlock = result;
+    self.countDown = timeout ? : ConnectTimeOutLimit;
+    __weak typeof(self)weakSelf = self;
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_queue_create(0, 0));
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(timer, ^{
+        weakSelf.countDown--;
+        if (weakSelf.countDown > 0) {
+            return;
+        }
+        dispatch_source_cancel(timer);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [weakSelf timerAction];
+        });
+    });
+    dispatch_resume(timer);
+    _timer = timer;
+}
+
+- (void)timerAction
+{
+    if (self.handlerDelegate && !self.Connected) {
+        self.event.EventCode = BLE_CONNECT;
+        self.Connected = NO;
+        NSError *error = [[NSError alloc]initWithDomain:@"Connection timeout" code:1 userInfo:nil];
+        [self disconnectBluetooth];
+        if (_connectBlock) {
+            _connectBlock(NO);
+        }
+        self.event.retCode = 1;
+        self.event.EventPara = error;
+        [self.handlerDelegate bleKey_EventHandler:self lockEvent:self.event];
+    }
+}
+- (void)stopTimer;
+{
+    if (_timer) {
+        dispatch_source_cancel(_timer);
+        _timer = nil;
+    }
+}
+
+- (void)disconnectBluetooth
+{
+    //    主动断连释放超时计时器
+    [self stopTimer];
+    self.Connecting = NO;
+    if (self.Connected) {
+        [self.bleClient bleClient_disconnect];
+    }
+}
+
+/**
+ 取临时通讯Key随机数
+
+ @return 通讯key随机数
+ */
+- (NSString *)bleKey_getTmpCommKeyRandom
+{
+    return self.DevRandom;
+}
+/**
+ 取临时通讯Key随机数
+ 
+ */
+- (void)bleKey_tmpCommKeyRandom
+{
+    [self.bleClient bleClient_sendData:[[BLEKeyProtocol shareBLEProtocol] bleProtocol_gainKeyRandom]];
+}
+/**
+ 为类设置和手机通讯需要的临时通讯密钥
+
+ */
+- (BOOL)bleKey_setTmpCommKey:(NSString *)commkey
+{
+    NSDictionary *dic = [NSDictionary dictionaryWithJsonStr:commkey];
+    NSData *commkeydata = [[dic objectForKey:@"TmpKeyInfo"] hexStringToData];
+    self.temporaryCommKey = [commkeydata AES128_decrypt:@"1234567890abcdef" base64:NO];
+    if (commkeydata) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+/**
+ 初始化钥匙
+
+ @param InitInfo 参数为初始化信息，从后台服务器发出
+
+ */
+- (void)bleKey_initEKey:(NSString *)InitInfo
+{
+    _isInitKey = YES;
+    NSDictionary *initDic = [NSDictionary dictionaryWithJsonStr:InitInfo];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_keyInit:[initDic objectForKey:@"CommKey_EKey"] kcv:[initDic objectForKey:@"KCV"]] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 钥匙恢复出厂设置
+
+ @param InitInfo 参数为初始化信息，从后台服务器发出
+ */
+- (void)bleKey_recoveryEKey:(NSString *)InitInfo
+{
+    _isInitKey = NO;
+    NSDictionary *initDic = [NSDictionary dictionaryWithJsonStr:InitInfo];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_keyInit:[initDic objectForKey:@"CommKey_EKey"] kcv:[initDic objectForKey:@"KCV"]] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+
+ 初始化连接锁具
+ @param InitInfo 不知道
+
+ */
+- (void)bleKey_initLock:(NSString *)InitInfo
+{
+    _isInitLock = YES;
+    NSDictionary *initDic = [NSDictionary dictionaryWithJsonStr:InitInfo];
+    NSString *lockId = [initDic objectForKey:@"LockID"];
+    NSString *otcKey = [initDic objectForKey:@"OTCKey"];
+    NSString *otcKCV = [initDic objectForKey:@"OTCKCV"];
+    NSString *lockMode = [initDic objectForKey:@"LockMode"];
+    NSString *codelist = [initDic objectForKey:@"CodeList"];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_lockInit:lockId OTCKey:otcKey OTCKCV:otcKCV LockMode:lockMode codeList:codelist temporaryCommkey:self.temporaryCommKey] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 恢复出厂设置连接锁具
+ @param InitInfo 不知道
+
+ */
+- (void)bleKey_recoveryLock:(NSString *)InitInfo lockId:(NSString *)lockId
+{
+    _isInitLock = NO;
+    NSDictionary *initDic = [NSDictionary dictionaryWithJsonStr:InitInfo];
+    NSString *otcKey = [initDic objectForKey:@"OTCKey"];
+    NSString *otcKCV = [initDic objectForKey:@"OTCKCV"];
+    NSString *lockMode = @"00";
+    NSString *codelist = @"00";
+    for (NSInteger index = 0; index < 63; index++) {
+        codelist = [NSString stringWithFormat:@"%@00", codelist];
+    }
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_lockInit:lockId OTCKey:otcKey OTCKCV:otcKCV LockMode:lockMode codeList:codelist temporaryCommkey:self.temporaryCommKey] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 获取连接蓝牙钥匙的锁具
+
+ */
+- (void)bleKey_linkedLock:(BLELinkLockBlock)lockBlock
+{
+    _lockBlock = lockBlock;
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_gainLockInfo] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 开锁
+ */
+- (void)bleKey_startUnLock
+{
+    self.preUnlock = NO;
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_startUnlock] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 同步时间
+ */
+- (void)bleKey_setTime
+{
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_resetTime:self.temporaryCommKey] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 发送OTC码
+
+ @param otc otc码
+ */
+- (void)bleKey_sendOTC:(NSString *)lockId otc:(NSString *)otccode
+{
+    NSDictionary *initDic = [NSDictionary dictionaryWithJsonStr:otccode];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_sendOTC:lockId otc:[initDic objectForKey:@"OTCCode"]] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 预发开锁
+
+ @param info 所有参数
+ */
+- (void)bleKey_sendPreOTC:(NSString *)info
+{
+    self.preUnlock = NO;
+//    NSDictionary *infoDic = [NSDictionary dictionaryWithJsonStr:info];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_sendPre:info] timeOut:BLE_COMMNUTATION_TIMEOUT];
+
+}
+
+/**
+ 下发预发因子
+ 
+ @param info 预发因子信息
+ */
+- (void)bleKey_sendPreFactor:(NSString *)info
+{
+   NSDictionary *infoDic = [NSDictionary dictionaryWithJsonStr:info];
+   [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_senPreFactor:[infoDic objectForKey:@"PreFactorData"]] timeOut:BLE_COMMNUTATION_TIMEOUT ];
+}
+/**
+ 设置参数
+ @param param 参数配置对象
+ */
+- (void)bleKey_setParam:(BLEKeyParam *)param;
+{
+    int bleTimeover = param.bleTimeOver.intValue/10;
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_setParam:param.keyMode timeOver:bleTimeover temporaryCommkey:self.temporaryCommKey] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+/**
+ 更新应急码
+ 
+ @param emergencyInfo 应急信息
+ */
+- (void)bleKey_sendEmergencyCodes:(NSString *)emergencyInfo
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithJsonStr:emergencyInfo];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_updateEmergencyKey:[dict objectForKey:@"CodeList"]] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 授权关锁
+ 
+ @param authCode 授权信息
+ */
+- (void)bleKey_authLock:(NSString *)authCode
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithJsonStr:authCode];
+    if ([NSString isStringEmpty:authCode]) {
+        [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_LockIn:@"00000000000000000000000000000000"] timeOut:BLE_COMMNUTATION_TIMEOUT];
+    }else{
+        [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_LockIn:[dict objectForKey:@"AuthCloseCode"]] timeOut:BLE_COMMNUTATION_TIMEOUT];
+    }
+}
+/**
+ 记录锁安装角度
+ */
+- (void)bleKey_setLockAngle
+{
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_lockAngleRecord] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 设置commkey生命周期
+ 
+ @param lifecycle 有效期
+ */
+- (void)bleKey_setTmpCommkeyLifecycle:(NSInteger)lifecycle
+{
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_setCommkeyLifecycle:lifecycle] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+/**
+ 开启关闭锁具离线模式
+ 
+ @param offMode 离线模式 0x01开启离线 0x02关闭离线
+ @param OffModeInfo 接口返回
+ */
+- (void)bleKey_changeOfflineMode:(NSString *)offMode  OffModeInfo:(NSString *)OffModeInfo
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithJsonStr:OffModeInfo];
+    NSString *offlineInfo;
+    if ([offMode isEqualToString:@"01"]) {
+        offlineInfo = [dict objectForKey:@"LockOffModeKCV"];
+    }else if ([offMode isEqualToString:@"00"]){
+        offlineInfo = [dict objectForKey:@"OffModeLockKCV"];
+    }
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_changeOfflineMode:offMode OffModeInfo:offlineInfo temporaryCommkey:self.temporaryCommKey] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+/**
+ 下发离线秘钥
+ 
+ @param offlineInfo 离线秘钥信息
+ */
+- (void)bleKey_sendOfflineCode:(NSString *)offlineInfo
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithJsonStr:offlineInfo];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_sendOfflineCode:[dict objectForKey:@"KeyOffModeKCV"] temporaryCommkey:self.temporaryCommKey] timeOut:BLE_COMMNUTATION_TIMEOUT];
+    
+}
+
+/**
+ 清除离线秘钥
+ 
+ @param lockId 锁具id
+ */
+- (void)bleKey_clearOfflineCode:(NSString *)lockId
+{
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_clearOfflineCode:lockId temporaryCommkey:self.temporaryCommKey] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 查询离线秘钥
+ */
+- (void)bleKey_queryOfflineCodes
+{
+        [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_queryOfflineCode] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+
+/**
+ 获取当前钥匙跟锁具信息
+ */
+- (void)bleKey_gainDeviceInfo:(BLELinkLockBlock)lockBlock
+{
+    _lockBlock = lockBlock;
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_gainDeviceInfo] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 请求硬件上传开关锁日志
+ */
+- (void)bleKey_requestLockLog
+{
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_applyLockLog] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 校验应急码
+ 
+ @param emergencyCode 应急码
+ */
+- (void)bleKey_verifyEmergencyCode:(NSString *)emergencyCode
+{
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_sendEmergencyCode:emergencyCode] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+/**
+ 获取版本号
+ */
+- (void)bleKey_gainVersion
+{
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_gainVersion] timeOut:BLE_COMMNUTATION_TIMEOUT];
+}
+
+
+/**
+ 启动挂锁升级
+ 
+ @param upgradeInfo 升级信息
+ @param url bin文件地址
+ */
+- (void)bleKey_startLockUpgrade:(NSString *)upgradeKey upgradeInfo:(NSString *)upgradeInfo binPath:(NSURL *)url;
+{
+    self.upgradeKey = upgradeKey;
+    NSDictionary *dict = [NSDictionary dictionaryWithJsonStr:upgradeInfo];
+    self.upgradeMgr = [[BleUpgradeMgr alloc]initWithPath:url];
+    [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_startUpgrage:[dict objectForKey:@"UpgradeKey"] kcv:[dict objectForKey:@"KCV"] pkgQty:self.upgradeMgr.dataArr.count hash:[Encrept APHash:self.upgradeMgr.dataBin]]];
+    
+}
+
+
+#pragma  mark BleEventProtocol
+//连接回调
+- (void)bleEvent_connectResult:(BOOL)success error:(NSError *)error
+{
+    self.Connecting = NO;
+    [self stopTimer];
+    if (error && !success) {
+        //        设备断连
+        self.event.EventCode = BLE_DISCONNECT;
+        if (error.code == 6) {
+            error = [NSError errorWithDomain:@"The connection has timed out unexpectedly." code:error.code userInfo:nil];
+        }else if (error.code == 7){
+            error = [NSError errorWithDomain:@"The specified device has disconnected from us." code:error.code userInfo:nil];
+        }
+        self.event.EventPara = error;
+    }else{
+        self.event.EventCode = BLE_CONNECT;
+    }
+    self.Connected = success;
+    if (_connectBlock) {
+        _connectBlock(success);
+    }
+    if (!success) {
+        [self clearData];
+    }
+    self.event.retCode = 0;
+    [self.handlerDelegate bleKey_EventHandler:self lockEvent:self.event];
+}
+- (void)bleEvent_bleDevEvent:(BleDevEvent *)bleEvent error:(NSError *)error
+{
+    
+    BLEDeviceEvent *event = [BLEDeviceEvent new];
+    if (error) {
+        event.retCode = 1;
+        event.EventPara = error;
+        [self.handlerDelegate bleKey_EventHandler:self lockEvent:event];
+        return;
+    }
+    if ([self dealWithData:bleEvent.eventData]){
+        NSLog(@"\n*********BleRecievedData********%@", self.receivedData);
+        BLEDeviceCmdPackage *response = [[BLEDeviceCmdPackage alloc]initWithGatherData:self.receivedData];
+        switch (response->CMD) {
+            case EH_BLEInterfaceTypeInitKey: event.EventCode = _isInitKey ? BLE_INITEKEY_REPLY : BLE_RECOVEYEKEY_REPLY;//初始化钥匙
+                break;
+            case EH_BLEInterfaceTypeInitLock: event.EventCode = _isInitLock ? BLE_INITLOCK_REPLY : BLE_RECOVERYLOCK_REPLY;//初始化锁具
+                break;
+            case EH_BLEInterfaceTypeSendPreFactor:event.EventCode = BLE_SETPREFACTOR_REPLY;//设置预发因子
+                break;
+            case EH_BLEInterfaceUpdateEmergencyKey:event.EventCode = BLE_UPDATAEMERGENCYCODE_REPLY;//设置应急开锁码
+                break;
+            case EH_BLEInterfaceTypeSendOfflineCode:event.EventCode = BLE_SENDOFFLINECODE_REPLY;//下发离线秘钥
+                break;
+            case EH_BLEInterfaceTypeChangeOfflineMode:event.EventCode = BLE_CHANGEOFFLINEMODE_REPLY;//更改离线模式
+                break;
+            case EH_BLEInterfaceTypeClearOfflineCode:event.EventCode = BLE_CLEAROFFLINECODE_REPLY;//清除离线秘钥
+                break;
+            case EH_BLEInterfaceTypeLockIn:event.EventCode = BLE_LOCKIN_REPLY;//授权关锁
+                break;
+            case EH_BLEInterfaceTypeSendOTC:event.EventCode = BLE_SENDOTC_REPLY;//发送校验OTC
+                break;
+            case EH_BLEInterfaceTypeSendPreOTC:event.EventCode = BLE_SENDPREOTC_REPLY;//发送校验预发OTC
+                break;
+            case EH_BLEInterfaceTypeSetParam:event.EventCode = BLE_SETPARAM_REPLY;//设置参数
+                break;
+            case EH_BLEInterfaceTypeVerifyEwmergencyCode:event.EventCode = BLE_VERIFYEMERGENCYCODE_REPLY;//发送校验应急码
+                break;
+            case EH_BLEInterfaceTypeSetCommkeyLifecycle:event.EventCode = BLE_SETCOMMKEYLIFECYCLE_REPLY;
+                break;
+            case EH_BLEInterfaceTypeLockAngleRecord:
+                event.EventCode = BLE_SETLOCKANGLE_REPLY;//记录锁体安装角度
+                //                    int lockAngle = [response->Data bytes];
+                //                    event.EventPara = [NSString stringWithFormat:@"%d",lockAngle];
+                break;
+            case EH_BLEInterfaceTypeGainKeyRandom:{
+                //获取钥匙随机数，老接口
+                event.EventCode = BLE_KEY_TMPRANDOM;
+                const void *lockdata = response->Data.bytes;
+                BleKeyApplyRandom *randomInfo = (BleKeyApplyRandom *)lockdata;
+                event.EventPara =[NSString stringWithFormat:@"%u", (unsigned int)randomInfo->random] ;
+            }
+                break;
+            case EH_BLEInterfaceTypeResetTime:{
+                event.EventCode = BLE_SETTIME_REPLY;//同步时间
+                const void *deviceInfoData = response->Data.bytes;
+                BleDeviceInfo *deviceInfo = (BleDeviceInfo *)deviceInfoData;
+                self.Voltage = [NSString stringWithFormat:@"%.2f",(CGFloat)(deviceInfo->Voltage)/20];
+                self.keyMode = [NSString stringWithFormat:@"%d",deviceInfo->KeyMode];
+                self.bleTimeOver = [NSString stringWithFormat:@"%d",deviceInfo->TimeOver];
+                self.offlineKey = [NSString stringWithFormat:@"%d",deviceInfo->OfflineKey];
+                self.offlineLogNum = [NSString stringWithFormat:@"%d",deviceInfo->LogNum];
+                self.DevRandom = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->KeyRand];
+                BLELock *lock = [[BLELock alloc]init];
+                lock.LockNo = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->LockID];
+                if (![lock.LockNo isEqualToString:@"0"]) {
+                    lock.LockType = [NSString stringWithFormat:@"%d",deviceInfo->LockType];
+                    lock.LockMode = [NSString stringWithFormat:@"%d",deviceInfo->LockMode];
+                    lock.LockRandom = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->LockRand];
+                    lock.closeCode = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->CloseRand];
+                    lock.lockAngle = [NSString stringWithFormat:@"%d",deviceInfo->FixDeg];
+                    lock.SensorStatus = [NSString stringWithFormat:@"%d",deviceInfo->SensorStatus];
+                    lock.linkStates = @"1";
+                    event.EventPara = lock;
+//                    if (lock.closeCode.intValue>0) {
+//                        lock.LockStatus = @"9";
+//                        BLEDeviceEvent *statusEvent = [[BLEDeviceEvent alloc]init];
+//                        statusEvent.EventCode = BLE_LOCK_STATUS;
+//                        statusEvent.EventPara = lock;
+//                        statusEvent.retCode = 0;
+//                        if (self.handlerDelegate) {
+//                            [self.handlerDelegate bleKey_EventHandler:self lockEvent:event];
+//
+//                    }
+                }else{
+                    lock.linkStates = @"0";
+                }
+
+                
+            }
+                break;
+            case EH_BLEInterfaceTypeGainEkeyAndLock:{
+                event.EventCode = BLE_DEVICEINFO_REPLY;//获取设备信息
+                const void *deviceInfoData = response->Data.bytes;
+                BleDeviceInfo *deviceInfo = (BleDeviceInfo *)deviceInfoData;
+                self.Voltage = [NSString stringWithFormat:@"%.2f",(CGFloat)(deviceInfo->Voltage)/20];
+                self.keyMode = [NSString stringWithFormat:@"%d",deviceInfo->KeyMode];
+                self.bleTimeOver = [NSString stringWithFormat:@"%d",deviceInfo->TimeOver*10];
+                self.offlineKey = [NSString stringWithFormat:@"%d",deviceInfo->OfflineKey];
+                self.offlineLogNum = [NSString stringWithFormat:@"%d",deviceInfo->LogNum];
+                self.DevRandom = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->KeyRand];
+                BLELock *lock = [[BLELock alloc]init];
+                lock.LockNo = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->LockID];
+                if (![lock.LockNo isEqualToString:@"0"]) {
+                    lock.LockType = [NSString stringWithFormat:@"%d",deviceInfo->LockType];
+                    lock.LockMode = [NSString stringWithFormat:@"%d",deviceInfo->LockMode];
+                    lock.LockRandom = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->LockRand];
+                    lock.closeCode = [NSString stringWithFormat:@"%u",(unsigned int)deviceInfo->CloseRand];
+                    lock.lockAngle = [NSString stringWithFormat:@"%d",deviceInfo->FixDeg];
+                    lock.SensorStatus = [NSString stringWithFormat:@"%d",deviceInfo->SensorStatus];
+                    lock.linkStates = @"1";
+                    event.EventPara = lock;
+
+                }else{
+                    lock.linkStates = @"0";
+                }
+                if (_lockBlock&&response->CMDRetCode==0) {
+                    _lockBlock(lock);
+                }
+            }
+                break;
+                
+            case EH_BLEInterfaceTypeGainLockInfo: {
+                //获取锁信息
+                _linkLock = [[BLELock alloc]initWithData:response->Data];
+                event.EventCode = BLE_LINKED_LOCK;
+                event.EventPara = _linkLock; //硬件获取的锁具信息回传
+                if (_lockBlock&&response->CMDRetCode==0) {
+                    _lockBlock(_linkLock);
+                }
+            }
+                break;
+            case EH_BLEInterfaceTypeStartUnlock: {//主动发起开锁
+                const void *lockdata = response->Data.bytes;
+                BleLockState *lockinfo = (BleLockState *)lockdata;
+                event.EventCode = BLE_STARTUNLOCK_REPLY;
+                BLELock *lock = [[BLELock alloc]init];
+                lock.LockNo =  [NSString stringWithFormat:@"%u", (unsigned int)lockinfo->LockId];
+                lock.linkStates =  [NSString stringWithFormat:@"%u", lockinfo->LockLink];
+                event.EventPara = lock;
+            }
+                break;
+            case EH_BLEInterfaceTypeQueryOfflineCode:{
+                //                    查询离线秘钥
+                const void *offlineData = response->Data.bytes;
+                BleOfflineKey *offlineKey = (BleOfflineKey *)offlineData;
+                NSMutableArray *offlineKeys = [NSMutableArray new];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey1]];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey2]];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey3]];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey4]];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey5]];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey6]];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey7]];
+                [offlineKeys addObject:[NSString stringWithFormat:@"%u",(unsigned int)offlineKey->offlineKey8]];
+                event.EventCode = BLE_QUERYOFFLINECODE_REPLY;
+                event.EventPara = offlineKeys;
+            }
+                break;
+            case EH_BLEInterfaceTypeRequestGetLog:{
+                const void *logData = response->Data.bytes;
+                BleLogInfo *logInfo = (BleLogInfo *)logData;
+                event.EventCode = BLE_EKEY_LOGINFO;
+                event.EventPara = [NSString stringWithFormat:@"%u",logInfo->LogNum];
+            }
+                break;
+            case EH_BLEInterfaceTypeGetVerison:{
+                const void *versionData = response->Data.bytes;
+                BleVersionInfo *versionInfo = (BleVersionInfo *)versionData;
+                UInt8 keyBuild = versionInfo->KeyVersion&0xff;
+                UInt8 keyVersion = (versionInfo->KeyVersion>>8)&0xff;
+                
+                UInt8 lockBuild = versionInfo->LockVersion&0xff;
+                UInt8 lockVersion = (versionInfo->LockVersion>>8)&0xff;
+                
+                NSMutableDictionary *dict = [NSMutableDictionary new];
+                [dict setValue:[NSString stringWithFormat:@"%d.%d",keyVersion,keyBuild] forKey:@"KeyVersion"];
+                [dict setValue:[NSString stringWithFormat:@"%d.%d",lockVersion,lockBuild] forKey:@"LockVersion"];
+                event.EventPara = dict;
+                event.EventCode = BLE_VERSIONINFO_REPLY;
+            }
+                break;
+            case EH_BLEInterfaceTypeLockStateChange: {
+                const void *lockstate = response->Data.bytes;
+                BleLockStateChange *lockinfo = (BleLockStateChange *)lockstate;
+                event.EventCode = BLE_LOCK_STATUS;
+                BLELock *lock = [[BLELock alloc]init];
+                lock.LockNo =  [NSString stringWithFormat:@"%u", (unsigned int)lockinfo->LockId];
+                lock.LockLink  = [NSString stringWithFormat:@"%u",lockinfo->lockLink];
+                lock.linkStates =  [NSString stringWithFormat:@"%u", lockinfo->lockLink];
+                lock.LockStatus =  [NSString stringWithFormat:@"%u", lockinfo->LockState];
+                lock.closeCode  =  [self closeCodeComplete:lockinfo->closeCode];
+                lock.LockRandom =  [NSString stringWithFormat:@"%u",(unsigned int)lockinfo->LockRand];
+                lock.LockType = [NSString stringWithFormat:@"%u",lockinfo->LockType];
+                lock.LockMode = [NSString stringWithFormat:@"%u",lockinfo->LockMode];
+                lock.lockAngle = [NSString stringWithFormat:@"%u",lockinfo->FixDeg];
+                lock.SensorStatus = [NSString stringWithFormat:@"%u",lockinfo->SensorStatus];
+                
+                self.offlineLogNum = [NSString stringWithFormat:@"%u",lockinfo->LogNum];
+                event.EventPara = lock;
+                [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_replyLockStateNotify]];
+                
+                
+            }
+                break;
+            case EH_BLEInterfaceTypeApplyOTC: {
+                const void *lockdata = response->Data.bytes;
+                BleLockApplyOTC *lockInfo = (BleLockApplyOTC *)lockdata;
+                event.EventCode = BLE_APPLY_OTC;
+                BLELock *lock = [[BLELock alloc]init];
+                lock.LockNo = [NSString stringWithFormat:@"%u", (unsigned int)lockInfo->LockId];
+                lock.LockRandom = [NSString stringWithFormat:@"%u", (unsigned int)lockInfo->random];
+                
+                event.EventPara = lock;
+                [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_replyApply]];
+            }
+                break;
+            case EH_BLEInterfaceTypeLog: {
+                BLEKeyLockLog *log = [[BLEKeyLockLog alloc]initWithData:response->Data];
+                event.EventCode = BLE_LOCK_LOG;
+                event.EventPara = log;
+                [self.bleClient bleClient_sendData:[self.bleProtocol bleProtocol_replyLockLog]];
+                
+            }
+                break;
+            case EH_BLEInterfaceTypeStartUpgrade:{
+                self.upgradeIndex = 0;
+                NSData *data = self.upgradeMgr.dataArr[self.upgradeIndex];
+                NSMutableData *mutableData =  [[NSMutableData alloc]initWithData:data];
+                [mutableData appendData:[self.upgradeKey hexStringToData]];
+                
+                [self.bleClient bleClient_sendData:[_bleProtocol bleProtocol_sendUpgrageInfo:self.upgradeIndex bin:data hash:[Encrept APHash:mutableData]]];
+            }
+                break;
+            case EH_BLEInterfaceTypeSendUpgradeInfo:{
+                if (response->CMDRetCode == 0) {
+                    self.upgradeIndex++;
+                    CGFloat percentFloat = (CGFloat)self.upgradeIndex/(CGFloat)self.upgradeMgr.dataArr.count;
+                    NSNumber *percent = [[NSNumber alloc]initWithFloat:percentFloat];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpgradePercent" object:percent];
+                    if (self.upgradeIndex<self.upgradeMgr.dataArr.count) {
+                        NSData *data = self.upgradeMgr.dataArr[self.upgradeIndex];
+                        NSMutableData *mutableData =  [[NSMutableData alloc]initWithData:data];
+                        [mutableData appendData:[self.upgradeKey hexStringToData]];
+                        [self.bleClient bleClient_sendData:[_bleProtocol bleProtocol_sendUpgrageInfo:self.upgradeIndex bin:data hash:[Encrept APHash:mutableData]]];
+                    }
+                }
+            }
+                break;
+            default:
+                break;
+        }
+        NSError *responseError = [BLEDeviceError BleKeyError_errorCode:response->CMDRetCode errorTag:response->CMD];
+        if (responseError) {
+            event.EventPara = responseError;
+            if (self.handlerDelegate) {
+                event.retCode = 1;
+                [self.handlerDelegate bleKey_EventHandler:self lockEvent:event];
+            }
+        } else {
+            if (self.handlerDelegate && event.EventCode) {
+                event.retCode = 0;
+                [self.handlerDelegate bleKey_EventHandler:self lockEvent:event];
+            }
+        }
+        [self clearData];
+    }
+}
+#pragma mark Private Method
+/**
+ 数据处理,硬件分包发送长度20字节
+
+ @param data 收到的数据
+ @return 是否收发数据完成
+ */
+- (BOOL)dealWithData:(NSData *)data
+{
+    NSLog(@"dealData%@", data);
+    Byte *bytes = (Byte *)[data bytes];
+    if (self.receivedData.length == 0) {
+        self.dataLenth = bytes[0] + bytes[1] * 256;
+        if (self.dataLenth <= 0) {
+            return NO;
+        }
+    }
+    [self.receivedData appendData:data];
+    if (self.receivedData.length - 2 == self.dataLenth) {
+        return YES;
+    } else if (self.receivedData.length - 2 > self.dataLenth) {
+        [self clearData];
+        return NO;
+    } else if (self.receivedData.length > 200 || self.dataLenth > 200) {
+        self.event.retCode = 1;
+        NSError *error = [NSError errorWithDomain:@"数据包解析错误" code:0x15 userInfo:nil];
+        self.event.EventPara = error;
+        if (self.handlerDelegate) {
+            [self.handlerDelegate bleKey_EventHandler:self lockEvent:self.event];
+        }
+        return NO;
+    }
+    return NO;
+}
+
+- (void)clearData
+{
+    self.dataLenth = 0;
+    [self.receivedData setLength:0];
+    NSLog(@"清除数据");
+}
+
+- (NSString *)closeCodeComplete:(int)closeCode
+{
+    if (closeCode==0) {
+        return @"0";
+    }
+    NSMutableString *closeCodeStr = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"%u",closeCode]];
+    while (closeCodeStr.length<6) {
+        [closeCodeStr insertString:@"0" atIndex:0];
+    }
+    return closeCodeStr;
+    
+}
+
+#pragma mark SETTER GETTER
+- (BleClient *)bleClient
+{
+    if (!_bleClient) {
+        
+        _bleClient = _bleClient ? : [[BleClient alloc]initWithPeripheral:self.peripheral];
+        _bleClient.delegate = self;
+    }
+    return _bleClient;
+}
+
+- (BLEKeyProtocol *)bleProtocol
+{
+    _bleProtocol = _bleProtocol ? : [BLEKeyProtocol shareBLEProtocol];
+    //        设置设备目标地址和源地址
+    //    [_bleProtocol setDeviceType:self.deviceType devAddr:self.EKeyID];
+    return _bleProtocol;
+}
+- (BLEDeviceEvent *)event
+{
+    if (!_event) {
+        _event = [BLEDeviceEvent new];
+    }
+    return _event;
+}
+
+- (NSMutableData *)receivedData
+{
+    return _receivedData = _receivedData ? : [NSMutableData new];
+}
+- (void)setKeyMode:(NSString *)keyMode
+{
+    _keyMode = keyMode;
+    NSString *keyModeBinary = [NSString getBinaryByDecimal:_keyMode.integerValue];
+//    self.InitStatus = [keyModeBinary substringWithRange:NSMakeRange(7, 1)];
+    self.hummerSwitch = [keyModeBinary substringWithRange:NSMakeRange(6, 1)];
+    self.ekeyUnlockType = [keyModeBinary substringWithRange:NSMakeRange(5, 1)];
+    self.ekeyLockType = [keyModeBinary substringWithRange:NSMakeRange(4, 1)];
+    self.lockRouse  = [keyModeBinary substringWithRange:NSMakeRange(3, 1)];
+    self.rouseType = [keyModeBinary substringWithRange:NSMakeRange(2, 1)];
+    self.pressMode = [keyModeBinary substringWithRange:NSMakeRange(1, 1)];
+    self.lockAuth = [keyModeBinary substringWithRange:NSMakeRange(0, 1)];
+}
+
+@end

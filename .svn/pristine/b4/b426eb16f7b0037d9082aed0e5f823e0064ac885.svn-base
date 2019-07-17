@@ -1,0 +1,54 @@
+//
+//  BLEEventHandlerType.h
+//  BLEColumnarLock
+//
+//  Created by 梦醒 on 2018/7/31.
+//  Copyright © 2018年 Patrick. All rights reserved.
+//
+
+const static NSInteger BLE_SETTIME_REPLY            = 0x03;//同步时间回复
+const static NSInteger BLE_SETPARAM_REPLY           = 0x04;//设置参数回复
+const static NSInteger BLE_INITEKEY_REPLY           = 0x06;//初始化钥匙回复
+const static NSInteger BLE_RECOVEYEKEY_REPLY        = 0x07;//钥匙恢复出厂设置回复
+const static NSInteger BLE_INITLOCK_REPLY           = 0x08;//初始化锁具
+const static NSInteger BLE_RECOVERYLOCK_REPLY       = 0x09;//锁具恢复出厂设置回复
+const static NSInteger BLE_LINKED_LOCK              = 0x10;//获取连接锁具信息
+const static NSInteger BLE_LOCK_STATUS              = 0x11;//锁状态发生变更
+const static NSInteger BLE_LOCK_LOG                 = 0x12;//获取锁具日志
+const static NSInteger BLE_APPLY_OTC                = 0x13;//设备申请OTC
+const static NSInteger BLE_DEVICEINFO_REPLY         = 0x14;//获取钥匙和锁具的信息
+const static NSInteger BLE_CONNECT                  = 0x15;//设备连接状态变更
+const static NSInteger BLE_STARTUNLOCK_REPLY        = 0x23;//发起开锁回复
+const static NSInteger BLE_SENDOTC_REPLY            = 0x24;//发送OTC后校验结果回复
+const static NSInteger BLE_DISCONNECT               = 0x16;
+
+
+const static NSInteger BLE_SETLOCKID_REPLY          = 0x17;//设置锁号回复
+const static NSInteger BLE_APPLYPUBLICKEY_REPLY     = 0x18;//申请公钥回复
+const static NSInteger BLE_SETCOMMKEY_REPLY         = 0x19;//设置通讯秘钥回复
+const static NSInteger BLE_SETOTCKEY_REPLY          = 0x20;//设置OTC密钥回复
+const static NSInteger BLE_REPLY_APPLYOTC           = 0x21;//设备发起申请OTC
+const static NSInteger BLE_REPLY_CLOSECODE          = 0x22;//闭锁码
+
+
+
+
+
+const static NSInteger BLE_KEY_TMPRANDOM            = 0x25;//获取钥匙随机数
+
+const static NSInteger BLE_SETPREFACTOR_REPLY       = 0x26;//下发预发因子回复
+const static NSInteger BLE_CHANGEOFFLINEMODE_REPLY  = 0x27;//变更离线模式回复
+const static NSInteger BLE_CLEAROFFLINECODE_REPLY   = 0x28;//清除离线秘钥回复
+const static NSInteger BLE_SENDOFFLINECODE_REPLY    = 0x29;//下发离线秘钥回复
+const static NSInteger BLE_QUERYOFFLINECODE_REPLY   = 0x30;//查询离线秘钥
+const static NSInteger BLE_UPDATAEMERGENCYCODE_REPLY= 0x32;//更新应急码
+const static NSInteger BLE_VERIFYEMERGENCYCODE_REPLY= 0x33;//校验应急码
+const static NSInteger BLE_SENDPREOTC_REPLY         = 0X34;//发送预发码
+const static NSInteger BLE_LOCKIN_REPLY             = 0X35;//授权关锁
+const static NSInteger BLE_SETLOCKANGLE_REPLY       = 0X36;//记录锁具安装角度回复
+const static NSInteger BLE_SETCOMMKEYLIFECYCLE_REPLY= 0X37;//设置密钥生命周期回复
+const static NSInteger BLE_VERSIONINFO_REPLY        = 0x38;//版本信息
+const static NSInteger BLE_EKEY_LOGINFO             = 0x39;//日志信息
+
+
+
